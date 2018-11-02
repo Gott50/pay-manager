@@ -6,3 +6,5 @@ services:
    image: instagramtools/payment-manager
    ports:
    - "7000:7000"
+   env_file:
+     - .env
