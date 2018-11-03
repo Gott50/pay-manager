@@ -3,6 +3,8 @@ version: '3'
 services:
  payment-manager:
    build: .
+   volumes:
+     - ./src:/app/src
    image: instagramtools/payment-manager
    ports:
    - "7000:7000"
