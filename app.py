@@ -1,5 +1,7 @@
+import json
+
 from flask_cors import CORS
-from flask import Flask
+from flask import Flask, request
 import src.gateway as gateway
 
 app = Flask(__name__)
@@ -18,10 +20,11 @@ def new_checkout():
     return str(gateway.generate_client_token())
 
 
-@app.route('/pay/purchase/<nonce>', methods=['GET'])
-def create_subscription(nonce):
-    app.logger.info('create_checkout(%s)' % nonce)
-    result = gateway.subscription(nonce)
+@app.route('/pay/purchase/', methods=['POST'])
+def create_subscription():
+    data = json.loads(request.data)
+    app.logger.info('create_checkout(%s)', data)
+    result = gateway.subscription(data.nonce)
     app.logger.info('create_checkout() return: %s' % result)
 
     return str(result)
