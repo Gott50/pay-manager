@@ -24,7 +24,7 @@ def new_checkout():
 def create_subscription():
     data = json.loads(request.data)
     app.logger.info('create_checkout(%s)', data)
-    result = gateway.subscription(data.nonce)
+    result = gateway.subscription(data)
     app.logger.info('create_checkout() return: %s' % result)
 
     return str(result)
