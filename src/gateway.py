@@ -22,8 +22,7 @@ def generate_client_token(customer_id=None):
 
 def subscription(userdata):
     customer = gateway.customer.create({
-        "email": userdata.get("email"),
-        "discount_code": userdata.get("discount_code"),
+        "email": userdata.get("email")
     })
 
     payment_method = gateway.payment_method.create({
@@ -33,7 +32,14 @@ def subscription(userdata):
 
     result = gateway.subscription.create({
         "payment_method_token": payment_method.payment_method.token,
-        "plan_id": "PinkParrotBasic"
+        "plan_id": "PinkParrotBasic",
+        "discounts": {
+            "add": [
+                {
+                    "inherited_from_id": userdata.get("discount_code")
+                }
+            ]
+        }
     })
 
     return result
