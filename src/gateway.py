@@ -23,6 +23,7 @@ def generate_client_token(customer_id=None):
 def subscription(userdata):
     customer = gateway.customer.create({
         "email": userdata.get("email"),
+        "discount_code": userdata.get("discount_code"),
     })
 
     payment_method = gateway.payment_method.create({
