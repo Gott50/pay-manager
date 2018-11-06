@@ -18,5 +18,13 @@ def new_checkout():
     return str(gateway.generate_client_token())
 
 
+@app.route('/pay/purchase/<nonce>', methods=['GET'])
+def create_subscription(nonce):
+    app.logger.info('create_checkout(%s)' % nonce)
+    result = gateway.subscription(nonce)
+    app.logger.info('create_checkout() return: %s' % result)
+
+    return str(result)
+
 if __name__ == '__main__':
     app.run()
