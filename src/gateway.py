@@ -53,3 +53,11 @@ def create_subscription(payment_method, userdata):
             "payment_method_token": payment_method.payment_method.token,
             "plan_id": PLAN_ID,
         })
+
+
+def get_subscriptions():
+    collection = gateway.subscription.search(
+        braintree.SubscriptionSearch.plan_id == PLAN_ID
+    )
+
+    return collection
