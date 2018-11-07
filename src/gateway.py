@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import braintree
 
+PLAN_ID = "PinkParrotBasic"
+
 load_dotenv()
 
 gateway = braintree.BraintreeGateway(
@@ -37,7 +39,7 @@ def create_subscription(payment_method, userdata):
     if userdata.get("discount_code"):
         return gateway.subscription.create({
             "payment_method_token": payment_method.payment_method.token,
-            "plan_id": "PinkParrotBasic",
+            "plan_id": PLAN_ID,
             "discounts": {
                 "add": [
                     {
@@ -49,5 +51,5 @@ def create_subscription(payment_method, userdata):
     else:
         return gateway.subscription.create({
             "payment_method_token": payment_method.payment_method.token,
-            "plan_id": "PinkParrotBasic",
+            "plan_id": PLAN_ID,
         })
