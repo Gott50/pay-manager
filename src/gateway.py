@@ -30,16 +30,24 @@ def subscription(userdata):
         "payment_method_nonce": userdata.get("nonce")
     })
 
-    result = gateway.subscription.create({
-        "payment_method_token": payment_method.payment_method.token,
-        "plan_id": "PinkParrotBasic",
-        "discounts": {
-            "add": [
-                {
-                    "inherited_from_id": userdata.get("discount_code")
-                }
-            ]
-        }
-    })
+    return create_subscription(payment_method, userdata)
 
-    return result
+
+def create_subscription(payment_method, userdata):
+    if userdata.get("discount_code"):
+        return gateway.subscription.create({
+            "payment_method_token": payment_method.payment_method.token,
+            "plan_id": "PinkParrotBasic",
+            "discounts": {
+                "add": [
+                    {
+                        "inherited_from_id": userdata.get("discount_code")
+                    }
+                ]
+            }
+        })
+    else:
+        return gateway.subscription.create({
+            "payment_method_token": payment_method.payment_method.token,
+            "plan_id": "PinkParrotBasic",
+        })
