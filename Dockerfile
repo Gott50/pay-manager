@@ -25,6 +25,8 @@ RUN apk add --no-cache --virtual .build-deps \
 
 COPY ./src/ ./src/
 COPY app.py app.py
+COPY manager.py manager.py
+COPY start.sh start.sh
 
 EXPOSE 7000
-CMD /usr/local/bin/gunicorn -b :7000 app:app
+CMD sh start.sh 7000
