@@ -10,3 +10,10 @@ services:
    - "7000:7000"
    env_file:
      - .env
+   environment:
+   - DEBUG=True
+   - DB_NAME=postgres
+   - DB_USER=postgres
+   - DB_PASS=postgres
+   - DB_SERVICE=postgres
+   - DB_PORT=5432
