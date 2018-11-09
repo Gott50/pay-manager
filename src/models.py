@@ -1,6 +1,22 @@
 from start import db
 
 
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean(), default=False)
+    confirmed_at = db.Column(db.DateTime())
+    accounts = db.relationship('Account', backref='user', lazy=True)
+
+    parent_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    affiliates = db.relationship("User")
+
+    def __repr__(self):
+        return '<User %r>' % self.email
+
+
 class Account(db.Model):
     __tablename__ = 'account'
 
@@ -18,6 +34,7 @@ class Account(db.Model):
 
     def __repr__(self):
         return '<Account %r>' % self.username
+
 
 def list():
     return [Account]
