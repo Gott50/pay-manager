@@ -2,6 +2,7 @@ version: '3'
 
 services:
  payment-manager:
+   command: sh dev.sh
    build: .
    volumes:
      - ./src:/app/src

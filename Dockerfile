@@ -25,8 +25,9 @@ RUN apk add --no-cache --virtual .build-deps \
 
 COPY ./src/ ./src/
 COPY app.py app.py
-COPY manager.py manager.py
+COPY start.py start.py
 COPY start.sh start.sh
+COPY dev.sh dev.sh
 
 EXPOSE 7000
 CMD sh start.sh 7000
