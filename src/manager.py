@@ -16,9 +16,8 @@ class Manager:
         result = gateway.get_subscriptions()
         print(result)
         for subscription in result.items:
-            print("%s: status: %s" %
-                  (subscription.id, subscription.status))
-
+            print("%s: status: %s; email: %s" %
+                  (subscription.id, subscription.status, subscription.transactions[-1].customer['email']))
 
     def run(self):
         while not sleep(10):
