@@ -1,5 +1,4 @@
 import gateway as gateway
-from time import sleep
 
 
 class Manager:
@@ -20,7 +19,6 @@ class Manager:
                   (subscription.id, subscription.status, subscription.transactions[-1].customer['email']))
 
     def run(self):
-        while not sleep(10):
             try:
                 self.manage()
             except Exception as e:
