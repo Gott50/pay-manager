@@ -27,7 +27,11 @@ def create_subscription():
     result = gateway.subscription(data)
     app.logger.info('create_checkout() return: %s' % result)
 
-    return str(result)
+    try:
+        return result.subscription.id
+    except:
+        return str(result), 500
+
 
 if __name__ == '__main__':
     app.run()
