@@ -2,7 +2,7 @@ import json
 
 from flask_cors import CORS
 from flask import Flask, request
-import src.gateway as gateway
+import gateway as gateway
 
 app = Flask(__name__)
 

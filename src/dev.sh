@@ -1,5 +1,5 @@
 #!/bin/sh
 
-python src/initDB.py
+python initDB.py
 
 sh start.sh 7000

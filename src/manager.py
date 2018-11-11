@@ -1,4 +1,4 @@
-import src.gateway as gateway
+import gateway as gateway
 from time import sleep
 
 
