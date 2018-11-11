@@ -9,6 +9,10 @@ services:
    image: instagramtools/payment-manager
    ports:
    - "7000:7000"
+   depends_on:
+   - postgres
+   links:
+   - postgres:postgres
    env_file:
      - .env
    environment:
@@ -18,3 +22,17 @@ services:
    - DB_PASS=postgres
    - DB_SERVICE=postgres
    - DB_PORT=5432
+
+ postgres:
+    image: postgres:latest
+    volumes:
+    - db_data:/var/lib/postgresql
+    ports:
+    - "5432:5432"
+    environment:
+    - DB_NAME=postgres
+    - DB_USER=postgres
+    - DB_PASS=postgres
+
+volumes:
+  db_data:
