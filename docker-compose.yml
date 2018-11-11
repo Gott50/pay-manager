@@ -5,7 +5,7 @@ services:
    command: sh dev.sh
    build: .
    volumes:
-     - ./src:/app/src
+     - ./src:/app
    image: instagramtools/payment-manager
    ports:
    - "7000:7000"

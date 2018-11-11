@@ -23,11 +23,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --virtual .rundeps $runDeps \
     && apk del .build-deps
 
-COPY ./src/ ./src/
-COPY app.py app.py
-COPY start.py start.py
-COPY start.sh start.sh
-COPY dev.sh dev.sh
+COPY ./src/ .
 
 EXPOSE 7000
 CMD sh start.sh 7000
