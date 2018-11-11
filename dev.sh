@@ -2,4 +2,4 @@
 
 python src/initDB.py
 
-sh start.sh
+sh start.sh 7000
