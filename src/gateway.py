@@ -22,15 +22,19 @@ def generate_client_token(customer_id=None):
     })
 
 
-def subscription(userdata):
+def subscription(userdata, print=print):
     customer = gateway.customer.create({
         "email": userdata.get("email")
     })
+
+    print("customer: %s" % customer)
 
     payment_method = gateway.payment_method.create({
         "customer_id": customer.customer.id,
         "payment_method_nonce": userdata.get("nonce")
     })
+
+    print("payment_method: %s" % payment_method)
 
     return create_subscription(payment_method, userdata)
 

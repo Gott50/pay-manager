@@ -23,9 +23,9 @@ def new_checkout():
 @app.route('/pay/purchase/', methods=['POST'])
 def create_subscription():
     data = json.loads(request.data)
-    app.logger.info('create_checkout(%s)', data)
-    result = gateway.subscription(data)
-    app.logger.info('create_checkout() return: %s' % result)
+    app.logger.warning('create_checkout(%s)', data)
+    result = gateway.subscription(data, app.logger.warning)
+    app.logger.warning('create_checkout() return: %s' % result)
 
     try:
         return result.subscription.id
