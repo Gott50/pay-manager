@@ -28,7 +28,7 @@ def create_subscription():
     app.logger.warning('create_checkout() return: %s' % result)
 
     try:
-        return result.subscription.id
+        return result.id
     except:
         return str(result), 500
 
