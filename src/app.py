@@ -2,6 +2,8 @@ import json
 
 from flask_cors import CORS
 from flask import Flask, request
+from stripe.error import InvalidRequestError
+
 import gateway as gateway
 
 app = Flask(__name__)
@@ -24,7 +26,13 @@ def new_checkout():
 def create_subscription():
     data = json.loads(request.data)
     app.logger.warning('create_checkout(%s)', data)
-    result = gateway.subscription(data, app.logger.warning)
+
+    try:
+        result = gateway.subscription(data, app.logger.warning)
+    except InvalidRequestError:
+        app.logger.warning('create_checkout() return: No such coupon, 406 Not Acceptable')
+        return "No such coupon", 406  # Not Acceptable
+
     app.logger.warning('create_checkout() return: %s' % result)
 
     try:
