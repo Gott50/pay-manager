@@ -24,3 +24,7 @@ def subscription(userdata, print=print):
         ],
         coupon=userdata.get('discount_code')
     )
+
+
+def get_subscriptions():
+    return {"items": []}
