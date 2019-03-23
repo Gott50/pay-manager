@@ -15,15 +15,25 @@ def subscription(userdata, print=print):
         source=userdata.get('token')  # obtained with Stripe.js
     )
 
-    return stripe.Subscription.create(
-        customer=customer.id,
-        items=[
-            {
-                "plan": "PinkParrotBeta",
-            },
-        ],
-        coupon=userdata.get('discount_code')
-    )
+    if userdata.get('discount_code') and len(userdata.get('discount_code')) > 0:
+        return stripe.Subscription.create(
+            customer=customer.id,
+            items=[
+                {
+                    "plan": "PinkParrotBeta",
+                },
+            ],
+            coupon=userdata.get('discount_code')
+        )
+    else:
+        return stripe.Subscription.create(
+            customer=customer.id,
+            items=[
+                {
+                    "plan": "PinkParrotBeta",
+                },
+            ]
+        )
 
 
 def get_subscriptions():
