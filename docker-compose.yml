@@ -6,7 +6,7 @@ services:
    build: .
    volumes:
      - ./src:/app
-   image: instagramtools/payment-manager:new
+   image: instagramtools/payment-manager
    ports:
    - "5000:7000"
    depends_on:
