@@ -21,7 +21,7 @@ class Account(db.Model):
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80), nullable=False)
     settings = db.Column(db.Text(), nullable=False)
     timetables = db.relationship('TimeTable', backref='account', lazy=True)
@@ -31,7 +31,7 @@ class Account(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     credit = db.Column(db.Integer, default=0)
 
-    subscription = db.Column(db.String(10), nullable=False, unique=True)
+    subscription = db.Column(db.String(10), unique=True)
     paid = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
