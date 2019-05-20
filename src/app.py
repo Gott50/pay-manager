@@ -10,10 +10,16 @@ app = Flask(__name__)
 
 CORS(app)
 
+cache = {}
+
 @app.route('/pay/purchase/', methods=['POST'])
 def create_subscription():
     data = json.loads(request.data)
-    app.logger.warning('create_checkout(%s)', data)
+    app.logger.warning('create_subscription(%s)', data)
+
+    if data.get('email') in cache:
+        app.logger.warning('cached result: ', cache[data.get('email')])
+        return cache[data.get('email')]
 
     try:
         result = gateway.subscription(data, app.logger.warning)
@@ -24,7 +30,9 @@ def create_subscription():
     app.logger.warning('create_checkout() return: %s' % result)
 
     try:
-        return result.id
+        result_id = result.id
+        cache[data.get('email')] = result_id
+        return result_id
     except:
         return str(result), 500
 
