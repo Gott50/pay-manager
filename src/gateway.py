@@ -6,7 +6,7 @@ import stripe
 load_dotenv()
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
-PLAN_ID = "PinkParrotBasic"
+PLAN_ID = "PINKPARROT_MONTHLY"
 
 
 def subscription(userdata, print=print):
