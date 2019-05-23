@@ -1,7 +1,7 @@
 import json
 
 from flask_cors import CORS
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from stripe.error import InvalidRequestError
 
 import gateway as gateway
@@ -49,8 +49,7 @@ def create_subscription():
 def get_discount(discount_code):
     try:
         app.logger.warning('get_discount(%s)', discount_code)
-
-        return 10
+        return jsonify(gateway.get_coupon(discount_code))
     except Exception as e:
         return str(e), 500
 

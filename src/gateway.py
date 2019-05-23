@@ -40,5 +40,10 @@ def get_customer(userdata, print=print):
     return customer
 
 
+def get_coupon(discount_code, print=print):
+    retrieve = stripe.Coupon.retrieve(discount_code)
+    return retrieve
+
+
 def get_subscriptions():
     return {"items": []}
