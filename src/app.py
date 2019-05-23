@@ -11,6 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 cache_subscription = {}
+cache_customer = {}
 
 @app.route('/pay/purchase/', methods=['POST'])
 def create_subscription():
@@ -22,7 +23,13 @@ def create_subscription():
         return cache_subscription[data.get('email')]
 
     try:
-        result = gateway.subscription(data, app.logger.warning)
+        if data.get('email') in cache_customer:
+            customer = cache_customer[data.get('email')]
+        else:
+            customer = gateway.get_customer(data, app.logger.warning)
+            cache_customer[data.get('email')] = customer
+
+        result = gateway.subscription(data, customer, app.logger.warning)
     except InvalidRequestError:
         app.logger.warning('create_checkout() return: No such coupon, 406 Not Acceptable')
         return "No such coupon", 406  # Not Acceptable
