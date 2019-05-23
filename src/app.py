@@ -13,6 +13,7 @@ CORS(app)
 cache_subscription = {}
 cache_customer = {}
 
+
 @app.route('/pay/purchase/', methods=['POST'])
 def create_subscription():
     data = json.loads(request.data)
@@ -42,6 +43,16 @@ def create_subscription():
         return result_id
     except:
         return str(result), 500
+
+
+@app.route('/pay/price/discount/<discount_code>', methods=['GET'])
+def get_discount(discount_code):
+    try:
+        app.logger.warning('get_discount(%s)', discount_code)
+
+        return 10
+    except Exception as e:
+        return str(e), 500
 
 
 if __name__ == '__main__':
