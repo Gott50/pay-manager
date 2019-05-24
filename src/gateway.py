@@ -31,11 +31,15 @@ def subscription(userdata, customer, print=print):
         )
 
 
-def get_customer(userdata, print=print):
-    customer = stripe.Customer.create(
-        email=userdata.get('email'),
-        source=userdata.get('token')  # obtained with Stripe.js
-    )
+def get_customer(email, source, print=print):
+    try:
+        customers = stripe.Customer.list(email=email, limit=1)
+        costomer = customers[0]
+    except:
+        customer = stripe.Customer.create(
+            email=email,
+            source=source
+        )
     print("get_customer() created customer: %s" % customer)
     return customer
 

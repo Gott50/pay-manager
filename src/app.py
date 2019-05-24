@@ -18,17 +18,19 @@ cache_customer = {}
 def create_subscription():
     data = json.loads(request.data)
     app.logger.warning('create_subscription(%s)', data)
+    email = data.get('email')
+    token = data.get('token')
 
-    if data.get('email') in cache_subscription:
-        app.logger.warning('cached result: ', cache_subscription[data.get('email')])
-        return cache_subscription[data.get('email')]
+    if email in cache_subscription:
+        app.logger.warning('cached result: ', cache_subscription[email])
+        return cache_subscription[email]
 
     try:
-        if data.get('email') in cache_customer:
-            customer = cache_customer[data.get('email')]
+        if email in cache_customer:
+            customer = cache_customer[email]
         else:
-            customer = gateway.get_customer(data, app.logger.warning)
-            cache_customer[data.get('email')] = customer
+            customer = gateway.get_customer(email=email, source=token, print=app.logger.warning)
+            cache_customer[email] = customer
 
         result = gateway.subscription(data, customer, app.logger.warning)
     except InvalidRequestError:
@@ -39,7 +41,7 @@ def create_subscription():
 
     try:
         result_id = result.id
-        cache_subscription[data.get('email')] = result_id
+        cache_subscription[email] = result_id
         return result_id
     except:
         return str(result), 500
