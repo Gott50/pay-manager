@@ -32,7 +32,7 @@ def create_subscription():
             customer = gateway.get_customer(email=email, source=token, print=app.logger.warning)
             cache_customer[email] = customer
 
-        result = gateway.subscription(data, customer, app.logger.warning)
+        result = gateway.subscription(customer, data.get('discount_code'), app.logger.warning)
     except InvalidRequestError:
         app.logger.warning('create_checkout() return: No such coupon, 406 Not Acceptable')
         return "No such coupon", 406  # Not Acceptable
