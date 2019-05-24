@@ -34,8 +34,9 @@ def subscription(customer, discount_code, print=print):
 def get_customer(email, source, print=print):
     try:
         customers = stripe.Customer.list(email=email, limit=1)
-        customer = customers[0]
-    except:
+        customer = customers['data'][0]
+    except Exception as e:
+        print(e)
         customer = stripe.Customer.create(
             email=email,
             source=source
@@ -46,6 +47,21 @@ def get_customer(email, source, print=print):
 
 def get_coupon(discount_code, print=print):
     retrieve = stripe.Coupon.retrieve(discount_code)
+    return retrieve
+
+
+def modify_costomer(email, source, print=print):
+    customer = get_customer(email=email, source=source)
+
+    try:
+        retrieve = stripe.Customer.modify(
+            customer.id,
+            source=source
+        )
+    except Exception as e:
+        print(e)
+        retrieve = subscription(customer=customer, print=print)
+
     return retrieve
 
 
