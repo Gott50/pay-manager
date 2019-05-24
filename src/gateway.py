@@ -34,7 +34,7 @@ def subscription(customer, discount_code, print=print):
 def get_customer(email, source, print=print):
     try:
         customers = stripe.Customer.list(email=email, limit=1)
-        costomer = customers[0]
+        customer = customers[0]
     except:
         customer = stripe.Customer.create(
             email=email,
