@@ -46,6 +46,19 @@ def create_subscription():
     except:
         return str(result), 500
 
+@app.route('/pay/customer/update', methods=['POST'])
+def update_customer():
+    try:
+        data = json.loads(request.data)
+        app.logger.warning('update_customer(%s)', data)
+        email = data.get('email')
+        token = data.get('token')
+
+        result = gateway.modify_costomer(email=email, source=token, print=app.logger.warning)
+        return result.id
+    except Exception as e:
+        return str(e), 500
+
 
 @app.route('/pay/price/discount/<discount_code>', methods=['GET'])
 def get_discount(discount_code):
