@@ -9,7 +9,7 @@ stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 PLAN_ID = "PINKPARROT_MONTHLY"
 
 
-def subscription(customer, discount_code, print=print):
+def subscription(customer, discount_code='', print=print):
     if discount_code and len(discount_code) > 0:
         return stripe.Subscription.create(
             customer=customer.id,
