@@ -35,13 +35,14 @@ def get_customer(email, source, print=print):
     try:
         customers = stripe.Customer.list(email=email, limit=1)
         customer = customers['data'][0]
+        print("get_customer() existing customer: %s" % customer)
     except Exception as e:
         print(e)
         customer = stripe.Customer.create(
             email=email,
             source=source
         )
-    print("get_customer() created customer: %s" % customer)
+        print("get_customer() created customer: %s" % customer)
     return customer
 
 
