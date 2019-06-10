@@ -43,7 +43,8 @@ def create_subscription():
         result_id = result.id
         cache_subscription[email] = result_id
         return result_id
-    except:
+    except Exception as exc:
+        app.logger.error("POST /pay/purchase/: " % exc)
         return str(result), 500
 
 @app.route('/pay/customer/update', methods=['POST'])
@@ -56,8 +57,9 @@ def update_customer():
 
         result = gateway.modify_costomer(email=email, source=token, print=app.logger.warning)
         return result.id
-    except Exception as e:
-        return str(e), 500
+    except Exception as exc:
+        app.logger.error("POST /pay/customer/update: " % exc)
+        return str(exc), 500  # 500 Internal Server Error
 
 
 @app.route('/pay/price/discount/<discount_code>', methods=['GET'])
@@ -65,8 +67,9 @@ def get_discount(discount_code):
     try:
         app.logger.warning('get_discount(%s)', discount_code)
         return jsonify(gateway.get_coupon(discount_code))
-    except Exception as e:
-        return str(e), 500
+    except Exception as exc:
+        app.logger.error("GET /pay/price/discount/%s: " % (discount_code, exc))
+        return str(exc), 500  # 500 Internal Server Error
 
 
 if __name__ == '__main__':
