@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask_cors import CORS
 from flask import Flask, request, jsonify
@@ -20,6 +21,9 @@ def create_subscription():
     app.logger.warning('create_subscription(%s)', data)
     email = data.get('email')
     token = data.get('token')
+
+    if os.environ.get('STRIPE_SECRET_KEY') == 'TEST':
+        return token
 
     if email in cache_subscription:
         app.logger.warning('cached result: ', cache_subscription[email])
